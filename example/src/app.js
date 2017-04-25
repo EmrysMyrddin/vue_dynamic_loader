@@ -4,10 +4,6 @@ let express = require('express');
 let app = express();
 let http = require('http').Server(app);
 
-let bodyParser = require('body-parser');
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({extended: true})); // support encoded bodies
-
 app.use(express.static('./public/'));
 app.use(express.static('./node_modules/'));
 app.get('/', function (req, res) {
