@@ -11,27 +11,35 @@ Vue.filter('uppercase', function (value) {
 /*-----------------
  APP
  -----------------*/
-new Vue({
+function startVue() {
+    new Vue({
 
-    // We want to target the div with an id of 'componentsList'
-    el: '#componentsList',
+        // We want to target the div with an id of 'componentsList'
+        el: '#componentsList',
 
-    data: {
-        plugins: []
-    },
+        data: {
+            plugins: []
+        },
 
-    created: function () {
-        this.$http.get('/pluginsList')
-            .then(response => {
-                this.plugins = response.body;
+        created: function () {
+            /*this.$http.get('/pluginsList')
+             .then(response => {
+             this.plugins = response.body;
 
-                console.log(this.plugins);
-            }, response => {
-                // error callback
-            });
-    },
+             let plugin = this.plugins[0];
 
-    methods: {},
+             let filePath = "plugins/" + plugin.name + "/" + plugin.mainFile;
+             eval(response.body);
 
-    computed: {}
-});
+             console.log(this.plugins);
+             }, response => {
+             // error callback
+             });
+             */
+        },
+
+        methods: {},
+
+        computed: {}
+    });
+}
