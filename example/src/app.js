@@ -23,7 +23,7 @@ let server = app.listen(8080, function () {
 
 /** list of plugins to be loaded */
 let pluginsList = [
-    {
+    /*{
         "pluginName": "drinker",
         "eltName": "drinker-item",
         "mainFile": "drinker.component.js",
@@ -38,11 +38,16 @@ let pluginsList = [
                         "quantity": 8
                     }
                 ]
-
             }
         }
+    },*/
+    {
+        "pluginName": "hello",
+        "eltName": "hello-item",
+        "mainFile": "hello.component.js",
+        "attributes": {}
     }
-]
+];
 /**
  * Get a list of JSON for all registered plugins
  * @path /pluginsList
