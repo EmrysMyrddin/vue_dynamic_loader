@@ -22,20 +22,6 @@ function startVue() {
         },
 
         created: function () {
-            /*this.$http.get('/pluginsList')
-             .then(response => {
-             this.plugins = response.body;
-
-             let plugin = this.plugins[0];
-
-             let filePath = "plugins/" + plugin.name + "/" + plugin.mainFile;
-             eval(response.body);
-
-             console.log(this.plugins);
-             }, response => {
-             // error callback
-             });
-             */
         },
 
         methods: {},
