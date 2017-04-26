@@ -44,8 +44,16 @@ let pluginsList = [
     {
         "pluginName": "hello",
         "eltName": "hello-item",
-        "mainFile": "hello.component.js",
+        "mainFile": "hello.component.js", //filesToLoad:"xx.js;yy.js" //cssToLoad:"cc.css"
         "attributes": {}
+    },
+    {
+        "pluginName": "helloParams",
+        "eltName": "helloParams-item",
+        "mainFile": "helloParams.component.js",
+        "attributes": {
+            "name":"marcel"
+        }
     }
 ];
 /**

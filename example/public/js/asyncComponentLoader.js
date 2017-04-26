@@ -10,7 +10,6 @@ function loadPlugins(vueElementId) {
         })
         .then(function () {
             startVue();
-            toto();
         })
         .catch(function (err) {
             console.log(err);
@@ -61,14 +60,14 @@ class AsyncComponentLoader {
 
             //add custom atributes from this component to the instanciated element
             /*for (let attr in plugin.attributes) {
-                if (plugin.attributes.hasOwnProperty(attr)) {
-                    let dataName = "" + plugin.pluginName + "_" + attr;
+             if (plugin.attributes.hasOwnProperty(attr)) {
+             let dataName = "" + plugin.pluginName + "_" + attr;
 
-                    app.pluginsData[dataName] = plugin.attributes[attr];
+             app.pluginsData[dataName] = plugin.attributes[attr];
 
-                    elt.setAttribute(":" + attr, "pluginsData[" + dataName + "]");
-                }
-            }*/
+             elt.setAttribute(":" + attr, "pluginsData[" + dataName + "]");
+             }
+             }*/
 
             vueElt.appendChild(elt);
         });
