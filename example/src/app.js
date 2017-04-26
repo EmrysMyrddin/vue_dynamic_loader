@@ -14,7 +14,7 @@ app.get('/', function (req, res) {
  * Server itself
  * @type {http.Server}
  */
-let server = app.listen(8090, function () {
+let server = app.listen(8080, function () {
     //print few information about the server
     let host = server.address().address;
     let port = server.address().port;
@@ -24,22 +24,25 @@ let server = app.listen(8090, function () {
 /** list of plugins to be loaded */
 let pluginsList = [
     {
-        "name": "drinker",
+        "pluginName": "drinker",
+        "eltName": "drinker-item",
         "mainFile": "drinker.component.js",
-        "params": {
+        "attributes": {
             "drinker": {
                 "name": "Gwen",
                 "quantity": 8,
-                "email": "gwennael.buchet@gmail.com"
-            },
-            "platform": {
-                "name": "AWS",
-                "quantity": 8
-            }
-        },
-    }
-];
+                "email": "gwennael.buchet@gmail.com",
+                "platforms": [
+                    {
+                        "name": "AWS",
+                        "quantity": 8
+                    }
+                ]
 
+            }
+        }
+    }
+]
 /**
  * Get a list of JSON for all registered plugins
  * @path /pluginsList
