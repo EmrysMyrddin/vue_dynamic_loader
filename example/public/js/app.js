@@ -11,6 +11,9 @@ Vue.filter('uppercase', function (value) {
 /*-----------------
  APP
  -----------------*/
+
+let app = null;
+
 function startVue() {
     app = new Vue({
 
