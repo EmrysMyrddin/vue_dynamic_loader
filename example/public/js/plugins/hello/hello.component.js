@@ -1,3 +1,3 @@
 Vue.component('hello-item', {
-    template: '<h1>Hello Marcel</h1>'
+    template: '<div><h1>Hello Marcel</h1></div>'
 });
