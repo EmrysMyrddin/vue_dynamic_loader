@@ -1,10 +1,4 @@
-/**
- * Created by gwennael.buchet on 25/04/17.
- */
-
 function loadPlugins(vueElementId) {
-    let self = this;
-    this.plugins = [];
     let loader = new AsyncComponentLoader(vueElementId);
 
     fetch('/pluginsList')
@@ -12,18 +6,22 @@ function loadPlugins(vueElementId) {
             return response.json();
         })
         .then(function (pluginsList) {
-            self.plugins = pluginsList;
             return loader.load(pluginsList);
         })
         .then(function () {
-            console.log(self.plugins);
-            toto();
             startVue();
+            toto();
         })
         .catch(function (err) {
             console.log(err);
         });
 }
+
+/**
+ * Created by gwennael.buchet on 25/04/17.
+ */
+
+let app = null;
 
 class AsyncComponentLoader {
 
@@ -62,11 +60,15 @@ class AsyncComponentLoader {
             let elt = document.createElement(plugin.eltName);
 
             //add custom atributes from this component to the instanciated element
-            for (let attr in plugin.attributes) {
+            /*for (let attr in plugin.attributes) {
                 if (plugin.attributes.hasOwnProperty(attr)) {
-                    elt.setAttribute(":"+attr, plugin.attributes[attr]);
+                    let dataName = "" + plugin.pluginName + "_" + attr;
+
+                    app.pluginsData[dataName] = plugin.attributes[attr];
+
+                    elt.setAttribute(":" + attr, "pluginsData[" + dataName + "]");
                 }
-            }
+            }*/
 
             vueElt.appendChild(elt);
         });
