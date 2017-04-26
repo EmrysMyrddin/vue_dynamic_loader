@@ -2,17 +2,21 @@
  * Created by gwennael.buchet on 25/04/17.
  */
 
-function loadPlugins() {
-    fetch('http://localhost:8090/pluginsList')
+function loadPlugins(vueElementId) {
+    let self = this;
+    this.plugins = [];
+    let loader = new AsyncComponentLoader(vueElementId);
+
+    fetch('/pluginsList')
         .then(function (response) {
             return response.json();
         })
         .then(function (pluginsList) {
-            let loader = new AsyncComponentLoader();
+            self.plugins = pluginsList;
             return loader.load(pluginsList);
         })
-        .then(function (response) {
-            console.log(response);
+        .then(function () {
+            console.log(self.plugins);
             toto();
             startVue();
         })
@@ -23,32 +27,52 @@ function loadPlugins() {
 
 class AsyncComponentLoader {
 
-    constructor() {
+    constructor(vueElementId) {
+        this.plugins = [];
+        this.vueElementId = vueElementId;
     }
 
     load(plugins) {
         let self = this;
 
+        this.plugins = plugins;
+
         return new Promise(function (resolve, reject) {
             let promesses = [];
 
             plugins.forEach(function (plugin) {
-                let p = self.loadScript("js/plugins/" + plugin.name + "/" + plugin.mainFile);
+                let p = self._loadScript("js/plugins/" + plugin.pluginName + "/" + plugin.mainFile);
                 promesses.push(p);
             });
 
             Promise
                 .all(promesses)
-                .then(values => {
-                    resolve(values);
+                .then(() => {
+                    self.addPluginsOnView();
+                    resolve();
                 }, reason => {
                     reject(reason);
                 });
         })
     }
 
+    addPluginsOnView() {
+        let vueElt = document.getElementById(this.vueElementId);
+        this.plugins.forEach(function (plugin) {
+            let elt = document.createElement(plugin.eltName);
 
-    loadScript(src) {
+            //add custom atributes from this component to the instanciated element
+            for (let attr in plugin.attributes) {
+                if (plugin.attributes.hasOwnProperty(attr)) {
+                    elt.setAttribute(":"+attr, plugin.attributes[attr]);
+                }
+            }
+
+            vueElt.appendChild(elt);
+        });
+    }
+
+    _loadScript(src) {
         return new Promise(function (resolve, reject) {
             let script = document.createElement('script');
             script.src = src;
