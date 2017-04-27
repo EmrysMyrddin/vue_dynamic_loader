@@ -28,8 +28,6 @@ function startVue() {
         created: function () {
         },
 
-        methods: {},
-
         computed: {}
     });
 }
