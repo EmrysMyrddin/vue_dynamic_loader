@@ -9,12 +9,16 @@ function loadPlugins(vueElementId) {
 			return loader.load(pluginsList);
 		})
 		.then(function () {
+			loader.addPluginsOnView();
 			startVue();
+			loader.setDataToProps();
 		})
 		.catch(function (err) {
 			console.log(err);
 		});
 }
+//todo : idée : avoir un composant "conteneur" qui encapsule tous les autres composants
+//todo : idée : utiliser les v-ref
 
 /**
  * Created by gwennael.buchet on 25/04/17.
@@ -25,6 +29,7 @@ class AsyncComponentLoader {
 	constructor(vueElementId) {
 		this.plugins      = [];
 		this.vueElementId = vueElementId;
+		this._idEltCount  = 0;
 	}
 
 	load(plugins) {
@@ -43,7 +48,7 @@ class AsyncComponentLoader {
 			Promise
 				.all(promesses)
 				.then(() => {
-					self.addPluginsOnView();
+					//self.addPluginsOnView();
 					resolve();
 				}, reason => {
 					reject(reason);
@@ -52,22 +57,38 @@ class AsyncComponentLoader {
 	}
 
 	addPluginsOnView() {
+		//todo : essayer d'utiliser addChild du component global. A voir avec le layout par CSS...
 		let vueElt = document.getElementById(this.vueElementId);
+		let self   = this;
+
 		this.plugins.forEach(function (plugin) {
 			let elt = document.createElement(plugin.eltName);
 
+			//let's generat a unique ID for this HTMLElement
+			let idElt = self._getUID(plugin.pluginName);
+			elt.setAttribute("id", idElt);
+			plugin['idElt'] = idElt;
+
+			vueElt.appendChild(elt);
+		});
+	}
+
+	setDataToProps() {
+		this.plugins.forEach(function (plugin) {
+			let elt = document.getElementById(plugin.idElt);
+
 			//add custom atributes from this component to the instanciated element
-			/*for (let attr in plugin.attributes) {
+			for (let attr in plugin.attributes) {
 				if (plugin.attributes.hasOwnProperty(attr)) {
 					let dataName = "" + plugin.pluginName + "_" + attr;
 
-					app.pluginsData[dataName] = plugin.attributes[attr];
+					//app.pluginsData[dataName] = plugin.attributes[attr];
+					//Vue.set(dataName, plugin.attributes[attr]);
+					//Vue.set(this.contacts[dataName], 'name', this.editPsgName);
 
-					elt.setAttribute(":" + attr, "pluginsData[" + dataName + "]");
+					elt.setAttribute(":" + attr, dataName);
 				}
-			}*/
-
-			vueElt.appendChild(elt);
+			}
 		});
 	}
 
@@ -80,5 +101,12 @@ class AsyncComponentLoader {
 			script.onerror = reject;
 			document.head.appendChild(script);
 		});
+	}
+
+	_getUID(pluginName) {
+		this._idEltCount++;
+
+		let r = Math.random().toString(36).substr(2, 16);
+		return pluginName + "_" + r + '_' + this._idEltCount;
 	}
 }
