@@ -2,10 +2,6 @@
  * Created by gwennael.buchet on 09/01/17.
  */
 
-function toto() {
-	console.log("hello toto");
-}
-
 let drinker = Vue.component(
 	'drinker',
 	{
