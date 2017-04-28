@@ -13,13 +13,10 @@ function startVue() {
         el: '#componentsList',
 
         data: {
-            testData : 22,
             pluginsData : []
         },
 
         created: function () {
-        },
-
-        computed: {}
+        }
     });
 }
