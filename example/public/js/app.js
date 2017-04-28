@@ -1,14 +1,6 @@
 'use strict';
 
 /*-----------------
- Filters
- -----------------*/
-/*
-Vue.filter('uppercase', function (value) {
-    return value.toUpperCase();
-});*/
-
-/*-----------------
  APP
  -----------------*/
 
