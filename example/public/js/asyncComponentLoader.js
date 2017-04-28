@@ -1,5 +1,10 @@
+/**
+ * Created by gwennael.buchet on 25/04/17.
+ */
+
+let loader;
 function loadPlugins(vueElementId) {
-	let loader = new AsyncComponentLoader(vueElementId);
+	loader = new AsyncComponentLoader(vueElementId);
 
 	fetch('/pluginsList')
 		.then(function (response) {
@@ -11,18 +16,11 @@ function loadPlugins(vueElementId) {
 		.then(function () {
 			loader.addPluginsOnView();
 			startVue();
-			loader.setDataToProps();
 		})
 		.catch(function (err) {
 			console.log(err);
 		});
 }
-//todo : idée : avoir un composant "conteneur" qui encapsule tous les autres composants
-//todo : idée : utiliser les v-ref
-
-/**
- * Created by gwennael.buchet on 25/04/17.
- */
 
 class AsyncComponentLoader {
 
@@ -57,14 +55,13 @@ class AsyncComponentLoader {
 	}
 
 	addPluginsOnView() {
-		//todo : essayer d'utiliser addChild du component global. A voir avec le layout par CSS...
 		let vueElt = document.getElementById(this.vueElementId);
 		let self   = this;
 
 		this.plugins.forEach(function (plugin) {
 			let elt = document.createElement(plugin.eltName);
 
-			//let's generat a unique ID for this HTMLElement
+			//let's generate a unique ID for this HTMLElement
 			let idElt = self._getUID(plugin.pluginName);
 			elt.setAttribute("id", idElt);
 			plugin['idElt'] = idElt;
@@ -73,7 +70,7 @@ class AsyncComponentLoader {
 		});
 	}
 
-	setDataToProps() {
+	setDataToProps(app) {
 		this.plugins.forEach(function (plugin) {
 			let elt = document.getElementById(plugin.idElt);
 
@@ -82,11 +79,7 @@ class AsyncComponentLoader {
 				if (plugin.attributes.hasOwnProperty(attr)) {
 					let dataName = "" + plugin.pluginName + "_" + attr;
 
-					//app.pluginsData[dataName] = plugin.attributes[attr];
-					//Vue.set(dataName, plugin.attributes[attr]);
-					//Vue.set(this.contacts[dataName], 'name', this.editPsgName);
-
-					elt.setAttribute(":" + attr, dataName);
+					elt.setAttribute(":" + attr, plugin.attributes[attr] /*dataName*/);
 				}
 			}
 		});
