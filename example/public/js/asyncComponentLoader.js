@@ -1,5 +1,8 @@
+let loader;
+
 function loadPlugins(vueElementId) {
-	let loader = new AsyncComponentLoader(vueElementId);
+
+	loader = new AsyncComponentLoader(vueElementId);
 
 	fetch('/pluginsList')
 		.then(function (response) {
@@ -10,9 +13,9 @@ function loadPlugins(vueElementId) {
 		})
 		.then(function () {
 			loader.addPluginsOnView();
-			startVue();
 			loader.setDataToProps();
 		})
+		.then(() => startVue())
 		.catch(function (err) {
 			console.log(err);
 		});
@@ -80,7 +83,7 @@ class AsyncComponentLoader {
 			//add custom atributes from this component to the instanciated element
 			for (let attr in plugin.attributes) {
 				if (plugin.attributes.hasOwnProperty(attr)) {
-					let dataName = "" + plugin.pluginName + "_" + attr;
+					let dataName = "pluginsData." + plugin.pluginName + "_" + attr;
 
 					//app.pluginsData[dataName] = plugin.attributes[attr];
 					//Vue.set(dataName, plugin.attributes[attr]);
