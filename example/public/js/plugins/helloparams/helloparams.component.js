@@ -1,8 +1,13 @@
 Vue.component('helloparams-item', {
-	template: '<h1>Hello {{name}}</h1>',
+	template: '<div><h1>Hello {{name}}</h1></div>',
 
 	props: ['name'],
-
-	created: function () {
+	date(){
+		return{
+		}
+	},
+	methods:{
+	},
+	computed:{
 	}
 });

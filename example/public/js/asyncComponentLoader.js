@@ -1,9 +1,7 @@
-/**
- * Created by gwennael.buchet on 25/04/17.
- */
-
 let loader;
+
 function loadPlugins(vueElementId) {
+
 	loader = new AsyncComponentLoader(vueElementId);
 
 	fetch('/pluginsList')
@@ -15,12 +13,19 @@ function loadPlugins(vueElementId) {
 		})
 		.then(function () {
 			loader.addPluginsOnView();
-			startVue();
+			loader.setDataToProps();
 		})
+		.then(() => startVue())
 		.catch(function (err) {
 			console.log(err);
 		});
 }
+//todo : idée : avoir un composant "conteneur" qui encapsule tous les autres composants
+//todo : idée : utiliser les v-ref
+
+/**
+ * Created by gwennael.buchet on 25/04/17.
+ */
 
 class AsyncComponentLoader {
 
@@ -55,13 +60,14 @@ class AsyncComponentLoader {
 	}
 
 	addPluginsOnView() {
+		//todo : essayer d'utiliser addChild du component global. A voir avec le layout par CSS...
 		let vueElt = document.getElementById(this.vueElementId);
 		let self   = this;
 
 		this.plugins.forEach(function (plugin) {
 			let elt = document.createElement(plugin.eltName);
 
-			//let's generate a unique ID for this HTMLElement
+			//let's generat a unique ID for this HTMLElement
 			let idElt = self._getUID(plugin.pluginName);
 			elt.setAttribute("id", idElt);
 			plugin['idElt'] = idElt;
@@ -70,16 +76,20 @@ class AsyncComponentLoader {
 		});
 	}
 
-	setDataToProps(app) {
+	setDataToProps() {
 		this.plugins.forEach(function (plugin) {
 			let elt = document.getElementById(plugin.idElt);
 
 			//add custom atributes from this component to the instanciated element
 			for (let attr in plugin.attributes) {
 				if (plugin.attributes.hasOwnProperty(attr)) {
-					let dataName = "" + plugin.pluginName + "_" + attr;
+					let dataName = "pluginsData." + plugin.pluginName + "_" + attr;
 
-					elt.setAttribute(":" + attr, plugin.attributes[attr] /*dataName*/);
+					//app.pluginsData[dataName] = plugin.attributes[attr];
+					//Vue.set(dataName, plugin.attributes[attr]);
+					//Vue.set(this.contacts[dataName], 'name', this.editPsgName);
+
+					elt.setAttribute(":" + attr, dataName);
 				}
 			}
 		});
