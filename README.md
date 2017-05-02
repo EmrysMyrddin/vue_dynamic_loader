@@ -18,3 +18,29 @@ Like a common plugins system, actually.
 ## How to use
 
 -- Work In Progress. Please, have a look at the "example" folder for now --
+
+As for now, your VueJS app must :
+ - be declared into a ```startVue()``` function
+ - declare ```pluginsData: {}``` as a data
+ - call ```asyncComponentLoader(this)``` in the created block
+
+Example: 
+```javascript
+let app = null;
+
+function startVue() {
+	app = new Vue({
+		// We want to target the div with an id of 'componentsList'
+		el: '#componentsList',
+
+		data: {
+			pluginsData: {}
+		},
+
+		created : function () {
+			asyncComponentLoader.setData(this);
+		},
+		computed: {}
+	});
+}
+```
