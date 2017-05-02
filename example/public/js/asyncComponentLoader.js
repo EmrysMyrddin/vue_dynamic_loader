@@ -54,7 +54,6 @@ class AsyncComponentLoader {
 			Promise
 				.all(promesses)
 				.then(() => {
-					//self.addPluginsOnView();
 					resolve();
 				}, reason => {
 					reject(reason);
