@@ -1,6 +1,6 @@
 ## A sample project using the components loader
 
-**"Vue_AsyncComponentLoader"** is, as for now, in the "asyncComponentLoader.js" file.
+**"Vue_AsyncComponentLoader"** is, as for now, in the "vue_asyncComponentLoader.js" file.
 
 This sample application is composed with :
  * A NodeJS Server which expose, via a REST service, a list of plugins to be loaded into the front
