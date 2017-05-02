@@ -1,5 +1,11 @@
 let loader;
 
+//todo :
+// - check with multiple props per plugin
+// - check with complex props values
+// - load multiple files per plugin
+// - load and apply CSS
+
 function loadPlugins(vueElementId) {
 
 	loader = new AsyncComponentLoader(vueElementId);
@@ -13,20 +19,17 @@ function loadPlugins(vueElementId) {
 		})
 		.then(function () {
 			loader.addPluginsOnView();
-			loader.setDataToProps();
+			//loader.setDataToProps();
 		})
 		.then(() => startVue())
 		.catch(function (err) {
 			console.log(err);
 		});
 }
-//todo : idée : avoir un composant "conteneur" qui encapsule tous les autres composants
-//todo : idée : utiliser les v-ref
 
 /**
  * Created by gwennael.buchet on 25/04/17.
  */
-
 class AsyncComponentLoader {
 
 	constructor(vueElementId) {
@@ -76,20 +79,19 @@ class AsyncComponentLoader {
 		});
 	}
 
-	setDataToProps() {
+	setDataToProps(vm) {
 		this.plugins.forEach(function (plugin) {
 			let elt = document.getElementById(plugin.idElt);
 
 			//add custom atributes from this component to the instanciated element
 			for (let attr in plugin.attributes) {
 				if (plugin.attributes.hasOwnProperty(attr)) {
-					let dataName = "pluginsData." + plugin.pluginName + "_" + attr;
-
-					//app.pluginsData[dataName] = plugin.attributes[attr];
-					//Vue.set(dataName, plugin.attributes[attr]);
-					//Vue.set(this.contacts[dataName], 'name', this.editPsgName);
+					let attrName = plugin.pluginName + "_" + attr + "_" + plugin.idElt;
+					let dataName = "pluginsData." + attrName;
 
 					elt.setAttribute(":" + attr, dataName);
+
+					vm.pluginsData[attrName] = plugin.attributes[attr];
 				}
 			}
 		});

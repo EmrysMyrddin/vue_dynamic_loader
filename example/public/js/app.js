@@ -16,13 +16,7 @@ function startVue() {
         },
 
         created: function () {
-          loader.plugins.forEach((plugin) => {
-      			for (let attr in plugin.attributes) {
-      				if (plugin.attributes.hasOwnProperty(attr)) {
-      					this.pluginsData[plugin.pluginName + "_" + attr] = plugin.attributes[attr];
-      				}
-      			}
-      		});
+        	loader.setDataToProps(this);
         },
         computed: {
         }
