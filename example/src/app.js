@@ -41,12 +41,6 @@ let pluginsList = [
             }
         }
     },*/
-    {
-        "pluginName": "hello",
-        "eltName": "hello-item",
-        "mainFile": "hello.component.js", //filesToLoad:"xx.js;yy.js" //cssToLoad:"cc.css"
-        "attributes": {}
-    },
 	{
 		"pluginName": "hello",
 		"eltName": "hello-item",
@@ -60,7 +54,15 @@ let pluginsList = [
         "attributes": {
             "name":"marcel"
         }
-    }
+    },
+	{
+		"pluginName": "helloparams",
+		"eltName": "helloparams-item",
+		"mainFile": "helloparams.component.js",
+		"attributes": {
+			"name":"robert"
+		}
+	}
 ];
 /**
  * Get a list of JSON for all registered plugins
