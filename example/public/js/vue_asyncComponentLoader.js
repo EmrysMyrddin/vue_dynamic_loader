@@ -6,7 +6,7 @@ let asyncComponentLoader;
 // - load multiple files per plugin
 // - load and apply CSS
 
-function loadPlugins(vueElementId) {
+function asyncLoadPlugins(vueElementId) {
 
 	asyncComponentLoader = new Vue_AsyncComponentLoader(vueElementId);
 
