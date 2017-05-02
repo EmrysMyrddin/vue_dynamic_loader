@@ -8,7 +8,7 @@ let loader;
 
 function loadPlugins(vueElementId) {
 
-	loader = new AsyncComponentLoader(vueElementId);
+	loader = new Vue_AsyncComponentLoader(vueElementId);
 
 	fetch('/pluginsList')
 		.then(function (response) {
@@ -30,7 +30,7 @@ function loadPlugins(vueElementId) {
 /**
  * Created by gwennael.buchet on 25/04/17.
  */
-class AsyncComponentLoader {
+class Vue_AsyncComponentLoader {
 
 	constructor(vueElementId) {
 		this.plugins      = [];
