@@ -16,7 +16,7 @@ function startVue() {
 		},
 
 		created : function () {
-			loader.setDataToProps(this);
+			asyncComponentLoader.setData(this);
 		},
 		computed: {}
 	});
