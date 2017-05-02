@@ -44,3 +44,9 @@ function startVue() {
 	});
 }
 ```
+
+Also, don't forget to call the asyncLoader when Window is loaded :
+ ```html
+ <body onload="asyncLoadPlugins('targetElementId')">
+ ```
+ 
