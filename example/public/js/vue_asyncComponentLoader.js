@@ -1,7 +1,6 @@
 let asyncComponentLoader;
 
 //todo :
-// - load and apply CSS
 // - let plgins path to be configurable
 // - let maintain a list of component loaded to be used by the main application
 
@@ -48,6 +47,7 @@ class Vue_AsyncComponentLoader {
 	 */
 	constructor(vueElementId) {
 		this.plugins       = [];
+		this.pluginsPath   = "js/plugins/";
 		this._vueElementId = vueElementId;
 		this._idEltCount   = 0;
 	}
@@ -61,28 +61,8 @@ class Vue_AsyncComponentLoader {
 			let promesses = [];
 
 			plugins.forEach(function (plugin) {
-
-				//load JavaScript files
-
-				//if there is just 1 file declared and it's not in an array, let's create a new one with only 1 value
-				if (!Array.isArray(plugin.files))
-					plugin.files = [plugin.files];
-
-				plugin.files.forEach(function (file) {
-					let p = self._loadScript("js/plugins/" + plugin.pluginName + "/" + file);
-					promesses.push(p);
-				});
-
-				//load CSS files
-				if (plugin.cssFiles !== undefined && plugin.cssFiles !== null) {
-					if (!Array.isArray(plugin.cssFiles))
-						plugin.cssFiles = [plugin.cssFiles];
-
-					plugin.cssFiles.forEach(function (file) {
-						let p = self._loadStyle("js/plugins/" + plugin.pluginName + "/" + file);
-						promesses.push(p);
-					});
-				}
+				self._makeLoadPromise("script", plugin.files, promesses, plugin.pluginName);
+				self._makeLoadPromise("style", plugin.cssFiles, promesses, plugin.pluginName);
 			});
 
 			Promise
@@ -95,8 +75,6 @@ class Vue_AsyncComponentLoader {
 				});
 		})
 	}
-
-	//todo: "makeLoadPromise" function to create a promise to load scripts and style files
 
 	/**
 	 * Populate all the props for all loaded plugins, with values declared in the JSON file.
@@ -118,6 +96,32 @@ class Vue_AsyncComponentLoader {
 				}
 			}
 		});
+	}
+
+	/**
+	 *
+	 * @param attr {object} IN - Should be plugin.files or plugin.cssFiles
+	 * @param promesses {Array} OUT - Reference to the array of promesses
+	 * @param pluginName {String} Name of the plugin
+	 * @private
+	 */
+	_makeLoadPromise(type, attr, promesses, pluginName) {
+		let self = this;
+		if (attr !== undefined && attr !== null) {
+			//if there is just 1 file declared and it's not in an array, let's create a new one with only 1 value}
+			if (!Array.isArray(attr)) {
+				attr = [attr];
+			}
+
+			attr.forEach(function (file) {
+				let p;
+				if (type === "script")
+					p = self._loadScript(self.pluginsPath + pluginName + "/" + file);
+				else
+					p = self._loadStyle(self.pluginsPath + pluginName + "/" + file);
+				promesses.push(p);
+			});
+		}
 	}
 
 	/**
@@ -167,7 +171,7 @@ class Vue_AsyncComponentLoader {
 		return new Promise(function (resolve, reject) {
 			let style     = document.createElement('link');
 			style.rel     = "stylesheet";
-			style.href     = filepath;
+			style.href    = filepath;
 			style.async   = true;
 			style.onload  = resolve;
 			style.onerror = reject;
