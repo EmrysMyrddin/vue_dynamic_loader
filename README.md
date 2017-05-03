@@ -55,7 +55,7 @@ Also, don't forget to call the asyncLoader when Window is loaded :
 ```json
 [
     {
-        "pluginName": "drinker",  //todo: rename 'pluginName' to 'folderName' ?
+        "pluginName": "drinker", 
         "eltName": "drinker-item",
         "files": ["md5.js", "drinker.component.js"], //may be an array or a single file
         "cssFiles": ["drinker.component.css"], //optional
