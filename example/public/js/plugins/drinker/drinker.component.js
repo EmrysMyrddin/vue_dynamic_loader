@@ -42,7 +42,6 @@ let drinker = Vue.component(
 		methods: {
 			gravatarURL: function (email) {
 				console.log(email);
-				//return "https://www.gravatar.com/avatar/bbd4d65db0818b474c3c784c39075084"; //MD5 for "gwennael.buchet@gmail.com"
 				return "https://www.gravatar.com/avatar/" + CryptoJS.MD5(email);
 			}
 		}
