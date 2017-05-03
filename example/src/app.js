@@ -27,7 +27,7 @@ let pluginsList = [
         "pluginName": "drinker",  //todo: rename 'pluginName' to 'folderName' ?
         "eltName": "drinker-item",
         "files": ["md5.js", "drinker.component.js"],
-        "propsValues": { //todo: rename 'attributes' to 'data' or 'propsData' or 'propsValues'
+        "propsValues": {
             "drinker": {
                 "name": "Gwen",
                 "quantity": 8,
