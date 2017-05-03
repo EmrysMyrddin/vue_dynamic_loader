@@ -22,7 +22,7 @@ Like a common plugins system, actually.
 As for now, your VueJS app must :
  - be declared into a ```startVue()``` function
  - declare ```pluginsData: {}``` as a data
- - call ```asyncComponentLoader(this)``` in the created block
+ - call ```asyncComponentLoader.setPropsValues(this)``` in the created block
 
 Example: 
 ```javascript
@@ -38,7 +38,7 @@ function startVue() {
 		},
 
 		created : function () {
-			asyncComponentLoader.setData(this);
+			asyncComponentLoader.setPropsValues(this);
 		},
 		computed: {}
 	});

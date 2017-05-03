@@ -86,19 +86,19 @@ class Vue_AsyncComponentLoader {
 	 * Populate all the props for all loaded plugins, with values declared in the JSON file.
 	 * @param vm {Vue} Reference to the Vue app
 	 */
-	setData(vm) {
+	setPropsValues(vm) {
 		this.plugins.forEach(function (plugin) {
 			let elt = document.getElementById(plugin.idElt);
 
 			//add custom atributes from this component to the instanciated element
-			for (let attr in plugin.attributes) {
-				if (plugin.attributes.hasOwnProperty(attr)) {
+			for (let attr in plugin.propsValues) {
+				if (plugin.propsValues.hasOwnProperty(attr)) {
 					let attrName = plugin.pluginName + "_" + attr + "_" + plugin.idElt;
 					let dataName = "pluginsData." + attrName;
 
 					elt.setAttribute(":" + attr, dataName);
 
-					vm.pluginsData[attrName] = plugin.attributes[attr];
+					vm.pluginsData[attrName] = plugin.propsValues[attr];
 				}
 			}
 		});
