@@ -1,7 +1,6 @@
 let asyncComponentLoader;
 
 //todo :
-// - check with multiple props per plugin
 // - load and apply CSS
 // - let plgins path to be configurable
 // - let maintain a list of component loaded to be used by the main application

@@ -53,7 +53,8 @@ let pluginsList = [
         "eltName": "helloparams-item",
         "files": ["helloparams.component.js"],
         "propsValues": {
-            "firstname":"marcel"
+            "firstname":"Marcel",
+            "lastname":"Beliveau"
         }
     },
 	{
@@ -61,7 +62,8 @@ let pluginsList = [
 		"eltName": "helloparams-item",
 		"files": "helloparams.component.js",
 		"propsValues": {
-			"firstname":"robert"
+			"firstname":"Robert",
+			"lastname":"Bidochon"
 		}
 	}
 ];
