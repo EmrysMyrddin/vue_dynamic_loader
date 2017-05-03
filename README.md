@@ -13,7 +13,7 @@ Like a common plugins system, actually.
  - [x] Take care of props of the plugin
  - [x] Allows several instances of the same plugin
  - [x] Load several files per plugin
- - [ ] Load and apply scoped CSS
+ - [x] Load and apply CSS
 
 ## How to use
 
@@ -49,4 +49,51 @@ Also, don't forget to call the asyncLoader when Window is loaded :
  ```html
  <body onload="asyncLoadPlugins('targetElementId')">
  ```
+ ## shape of the list of plugins to load
+ The plugins to be loaded are send to vue_asyncComponentLoader as a JSON list.
  
+```json
+[
+    {
+        "pluginName": "drinker",  //todo: rename 'pluginName' to 'folderName' ?
+        "eltName": "drinker-item",
+        "files": ["md5.js", "drinker.component.js"], //may be an array or a single file
+        "cssFiles": ["drinker.component.css"], //optional
+        "propsValues": {
+            "drinker": {
+                "name": "Gwen",
+                "quantity": 8,
+                "email": "gwennael.buchet@gmail.com",
+                "platforms": [
+                    {
+                        "name": "AWS",
+                        "quantity": 8
+                    }
+                ]
+            }
+        }
+    },
+	{
+		"pluginName": "hello",
+		"eltName": "hello-item",
+		"files": "hello.component.js",
+		"propsValues": {}
+	},
+    {
+        "pluginName": "helloparams",
+        "eltName": "helloparams-item",
+        "files": ["helloparams.component.js"],
+        "propsValues": {
+            "firstname":"marcel"
+        }
+    },
+	{
+		"pluginName": "helloparams",
+		"eltName": "helloparams-item",
+		"files": "helloparams.component.js",
+		"propsValues": {
+			"firstname":"robert"
+		}
+	}
+]
+```
