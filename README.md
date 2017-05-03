@@ -12,7 +12,7 @@ Like a common plugins system, actually.
  - [x] Asynchronously loading of external plugins
  - [x] Take care of props of the plugin
  - [x] Allows several instances of the same plugin
- - [ ] Load several files per plugin
+ - [x] Load several files per plugin
  - [ ] Load and apply scoped CSS
 
 ## How to use

@@ -2,7 +2,6 @@ let asyncComponentLoader;
 
 //todo :
 // - check with multiple props per plugin
-// - check with complex props values
 // - load multiple files per plugin
 // - load and apply CSS
 
@@ -18,14 +17,14 @@ function asyncLoadPlugins(vueElementId) {
 			/*
 			 "pluginsList" is a JSON of this shape :
 			 [
-				 {
-					 "pluginName": "helloparams",
-					 "eltName"   : "helloparams-item",
-					 "mainFile"  : "helloparams.component.js",
-					 "attributes": {
-					    "firstname" : "Marcel"
-				    }
-				 }
+			 {
+			 "pluginName": "helloparams",
+			 "eltName"   : "helloparams-item",
+			 "files"  : ["helloparams.component.js"],
+			 "attributes": {
+			 "firstname" : "Marcel"
+			 }
+			 }
 			 ]
 			 */
 			return asyncComponentLoader.load(pluginsList);
@@ -61,8 +60,15 @@ class Vue_AsyncComponentLoader {
 			let promesses = [];
 
 			plugins.forEach(function (plugin) {
-				let p = self._loadScript("js/plugins/" + plugin.pluginName + "/" + plugin.mainFile);
-				promesses.push(p);
+
+				//if there is just 1 file declared and it's not in an array, let's create a new one with only 1 value
+				if (!Array.isArray(plugin.files))
+					plugin.files = [plugin.files];
+
+				plugin.files.forEach(function (file) {
+					let p = self._loadScript("js/plugins/" + plugin.pluginName + "/" + file);
+					promesses.push(p);
+				})
 			});
 
 			Promise
