@@ -2,8 +2,9 @@ let asyncComponentLoader;
 
 //todo :
 // - check with multiple props per plugin
-// - load multiple files per plugin
 // - load and apply CSS
+// - let plgins path to be configurable
+// - let maintain a list of component loaded to be used by the main application
 
 function asyncLoadPlugins(vueElementId) {
 
@@ -21,6 +22,7 @@ function asyncLoadPlugins(vueElementId) {
 			 "pluginName": "helloparams",
 			 "eltName"   : "helloparams-item",
 			 "files"  : ["helloparams.component.js"],
+			 "cssFiles" : ["style.css"], //optional
 			 "attributes": {
 			 "firstname" : "Marcel"
 			 }
@@ -61,6 +63,8 @@ class Vue_AsyncComponentLoader {
 
 			plugins.forEach(function (plugin) {
 
+				//load JavaScript files
+
 				//if there is just 1 file declared and it's not in an array, let's create a new one with only 1 value
 				if (!Array.isArray(plugin.files))
 					plugin.files = [plugin.files];
@@ -68,7 +72,18 @@ class Vue_AsyncComponentLoader {
 				plugin.files.forEach(function (file) {
 					let p = self._loadScript("js/plugins/" + plugin.pluginName + "/" + file);
 					promesses.push(p);
-				})
+				});
+
+				//load CSS files
+				if (plugin.cssFiles !== undefined && plugin.cssFiles !== null) {
+					if (!Array.isArray(plugin.cssFiles))
+						plugin.cssFiles = [plugin.cssFiles];
+
+					plugin.cssFiles.forEach(function (file) {
+						let p = self._loadStyle("js/plugins/" + plugin.pluginName + "/" + file);
+						promesses.push(p);
+					});
+				}
 			});
 
 			Promise
@@ -81,6 +96,8 @@ class Vue_AsyncComponentLoader {
 				});
 		})
 	}
+
+	//todo: "makeLoadPromise" function to create a promise to load scripts and style files
 
 	/**
 	 * Populate all the props for all loaded plugins, with values declared in the JSON file.
@@ -138,6 +155,24 @@ class Vue_AsyncComponentLoader {
 			script.onload  = resolve;
 			script.onerror = reject;
 			document.head.appendChild(script);
+		});
+	}
+
+	/**
+	 * Load a CSS file into the DOM
+	 * @param filepath {String} full file path and name
+	 * @returns {Promise}
+	 * @private
+	 */
+	_loadStyle(filepath) {
+		return new Promise(function (resolve, reject) {
+			let style     = document.createElement('link');
+			style.rel     = "stylesheet";
+			style.href     = filepath;
+			style.async   = true;
+			style.onload  = resolve;
+			style.onerror = reject;
+			document.head.appendChild(style);
 		});
 	}
 

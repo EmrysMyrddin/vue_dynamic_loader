@@ -27,6 +27,7 @@ let pluginsList = [
         "pluginName": "drinker",  //todo: rename 'pluginName' to 'folderName' ?
         "eltName": "drinker-item",
         "files": ["md5.js", "drinker.component.js"],
+        "cssFiles": ["drinker.component.css"], //optional
         "propsValues": {
             "drinker": {
                 "name": "Gwen",
@@ -40,30 +41,31 @@ let pluginsList = [
                 ]
             }
         }
-    }/*,
+    },
 	{
 		"pluginName": "hello",
 		"eltName": "hello-item",
-		"mainFile": "hello.component.js", //filesToLoad:"xx.js;yy.js" //cssToLoad:"cc.css"
-		"attributes": {}
+		"files": "hello.component.js", //filesToLoad:"xx.js;yy.js" //cssToLoad:"cc.css"
+		"propsValues": {}
 	},
     {
         "pluginName": "helloparams",
         "eltName": "helloparams-item",
-        "mainFile": "helloparams.component.js",
-        "attributes": {
-            "name":"marcel"
+        "files": ["helloparams.component.js"],
+        "propsValues": {
+            "firstname":"marcel"
         }
     },
 	{
 		"pluginName": "helloparams",
 		"eltName": "helloparams-item",
-		"mainFile": "helloparams.component.js",
-		"attributes": {
-			"name":"robert"
+		"files": "helloparams.component.js",
+		"propsValues": {
+			"firstname":"robert"
 		}
-	}*/
+	}
 ];
+
 /**
  * Get a list of JSON for all registered plugins
  * @path /pluginsList
