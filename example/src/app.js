@@ -24,10 +24,10 @@ let server = app.listen(8080, function () {
 /** list of plugins to be loaded */
 let pluginsList = [
     {
-        "pluginName": "drinker",
+        "pluginName": "drinker",  //todo: rename 'pluginName' to 'folderName' ?
         "eltName": "drinker-item",
-        "mainFile": "drinker.component.js",
-        "attributes": {
+        "files": ["md5.js", "drinker.component.js"],
+        "attributes": { //todo: rename 'attributes' to 'data' or 'propsData' or 'propsValues'
             "drinker": {
                 "name": "Gwen",
                 "quantity": 8,
@@ -40,7 +40,7 @@ let pluginsList = [
                 ]
             }
         }
-    },
+    }/*,
 	{
 		"pluginName": "hello",
 		"eltName": "hello-item",
@@ -62,7 +62,7 @@ let pluginsList = [
 		"attributes": {
 			"name":"robert"
 		}
-	}
+	}*/
 ];
 /**
  * Get a list of JSON for all registered plugins
